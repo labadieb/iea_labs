@@ -1,0 +1,33 @@
+#!/bin/bash
+
+function check_contents() {
+
+	for i in $list; do
+		
+		echo $i
+		
+		if [[ $i == *.txt ]]; then
+				((count+=1))
+				echo $i 'is a text file'
+				echo $count 'text files'
+		elif [[ -d $i ]]; then
+			directory_list=$directory_list+$i
+		fi
+	done
+
+	check_contents $directory_list
+}
+
+if [[ $# = 0 ]]; then
+	echo "Please input a directory as an argument"
+        exit
+elif [[ -d $1 ]]; then
+	echo $1 "is a directory"
+	list=`ls $1`
+	echo $list
+	count=0
+	check_contents $list
+else
+	echo "Please input a directory as an argument"
+        exit	
+fi
